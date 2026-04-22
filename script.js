@@ -18,3 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function toggleRoom(element) {
+    if (element.classList.contains('available')) {
+        element.classList.remove('available');
+        element.classList.add('occupied');
+        // You would eventually send an update to your database here
+        console.log("Room " + element.innerText + " marked as Occupied");
+    } else {
+        element.classList.remove('occupied');
+        element.classList.add('available');
+        console.log("Room " + element.innerText + " marked as Available");
+    }
+}

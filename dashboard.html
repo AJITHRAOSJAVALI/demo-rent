@@ -41,5 +41,105 @@
         </div>
     </div>
 </main>
+
+<!-- admin panal-->
+
+<section class="admin-panel">
+    <h2>Post New Property (Verification Mode)</h2>
+    <form id="postPropertyForm">
+        <div class="form-group">
+            <label>Property Name</label>
+            <input type="text" placeholder="e.g., Sunrise PG or Green View Apartment">
+        </div>
+        
+        <div class="form-group">
+            <label>Exact Location (Google Maps Link or Area)</label>
+            <input type="text" placeholder="Koramangala 4th Block, near Sony Signal">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Rent (₹)</label>
+                <input type="number" placeholder="15000">
+            </div>
+            <div class="form-group">
+                <label>Security Deposit (₹)</label>
+                <input type="number" placeholder="50000">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Verified Images</label>
+            <input type="file" multiple accept="image/*" class="file-input">
+            <p class="hint">Upload the photos you clicked during the visit.</p>
+        </div>
+
+        <button type="submit" class="submit-btn">Publish Verified Listing</button>
+    </form>
+</section>
+
+<!-- to ADD property-->
+
+<section class="admin-panel">
+    <h2>Post New Property (Verification Mode)</h2>
+    <form id="postPropertyForm">
+        <div class="form-group">
+            <label>Property Name</label>
+            <input type="text" placeholder="e.g., Sunrise PG or Green View Apartment">
+        </div>
+        
+        <div class="form-group">
+            <label>Exact Location (Google Maps Link or Area)</label>
+            <input type="text" placeholder="Koramangala 4th Block, near Sony Signal">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Rent (₹)</label>
+                <input type="number" placeholder="15000">
+            </div>
+            <div class="form-group">
+                <label>Security Deposit (₹)</label>
+                <input type="number" placeholder="50000">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Verified Images</label>
+            <input type="file" multiple accept="image/*" class="file-input">
+            <p class="hint">Upload the photos you clicked during the visit.</p>
+        </div>
+
+        <button type="submit" class="submit-btn">Publish Verified Listing</button>
+    </form>
+</section>
+
+<!-- inventory or rooms management-->
+
+<section class="inventory-management">
+    <h3>Floor-wise Availability</h3>
+    <div class="floor-container">
+        <div class="floor">
+            <h4>1st Floor</h4>
+            <div class="room-grid">
+                <div class="room available" onclick="toggleRoom(this)">101</div>
+                <div class="room occupied" onclick="toggleRoom(this)">102</div>
+                <div class="room available" onclick="toggleRoom(this)">103</div>
+                <div class="room available" onclick="toggleRoom(this)">104</div>
+            </div>
+        </div>
+        
+        <div class="floor">
+            <h4>2nd Floor</h4>
+            <div class="room-grid">
+                <div class="room available" onclick="toggleRoom(this)">201</div>
+                <div class="room available" onclick="toggleRoom(this)">202</div>
+                <div class="room occupied" onclick="toggleRoom(this)">203</div>
+                <div class="room occupied" onclick="toggleRoom(this)">204</div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>
