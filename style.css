@@ -1,0 +1,190 @@
+/* --- LOGIN PAGE SPECIFIC STYLES --- */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #00b894 0%, #2d3436 100%);
+}
+
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 10px;
+    color: #2d3436;
+}
+
+.login-container p {
+    color: #636e72;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+/* These reuse your existing form-group styles but look good on the login page too */
+.login-container input {
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #00b894;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background: #00947a;
+}/* --- GLOBAL THEME & RESET --- */
+:root {
+    --primary-green: #00b894;
+    --dark-grey: #2d3436;
+    --light-bg: #f9f9f9;
+    --white: #ffffff;
+    --border-color: #dfe6e9;
+    --occupied-red: #ff7675;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    margin: 0;
+    color: var(--dark-grey);
+}
+
+/* --- NAVIGATION --- */
+.admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: var(--dark-grey);
+    color: var(--white);
+}
+
+.logo span { color: var(--primary-green); font-weight: 800; }
+
+/* --- DASHBOARD LAYOUT --- */
+.dashboard-container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+hr { border: 0; border-top: 1px solid var(--border-color); margin: 40px 0; }
+
+/* --- REVENUE & STAT CARDS --- */
+.revenue-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-top: 5px solid var(--primary-green);
+}
+
+.stat-card h4 { margin: 0; font-size: 0.8rem; color: #636e72; text-transform: uppercase; }
+.stat-card .amount { font-size: 1.8rem; font-weight: bold; margin: 10px 0; }
+
+.progress-bar { background: #eee; height: 8px; border-radius: 5px; }
+.progress { background: var(--primary-green); height: 100%; border-radius: 5px; }
+
+/* --- FORM & CHECKLIST --- */
+.admin-panel { background: var(--white); padding: 30px; border-radius: 15px; }
+
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+.form-group input { 
+    width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; 
+    box-sizing: border-box; /* Crucial for spacing */
+}
+
+.verification-checklist { background: #f1fcf9; padding: 20px; border-radius: 10px; margin: 20px 0; }
+.checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.submit-btn {
+    background: var(--primary-green); color: white; border: none; padding: 15px 30px;
+    border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem;
+}
+
+/* --- DYNAMIC INVENTORY TOOL --- */
+.setup-tool {
+    background: #f1f2f6;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 2px dashed var(--primary-green);
+}
+
+.tool-inputs { display: flex; gap: 10px; margin-top: 10px; }
+.tool-inputs input { padding: 10px; border-radius: 5px; border: 1px solid #ccc; flex: 1; }
+
+.add-btn { background: var(--dark-grey); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+
+/* --- ROOM BOXES (The "Flexible" Grid) --- */
+.floor-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.floor-label { width: 120px; font-weight: bold; font-size: 1.1rem; padding-top: 10px; }
+
+.room-grid { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
+
+.room {
+    width: 70px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid transparent;
+}
+
+.available { background: #e3fcf7; color: #00b894; border-color: #b3ede0; }
+.occupied { background: #fff5f5; color: #fa5252; border-color: #ffc9c9; }
+
+.room:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* --- HISTORY TABLE --- */
+.history-table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+.history-table th { background: #f8f9fa; padding: 15px; text-align: left; border-bottom: 2px solid #eee; }
+.history-table td { padding: 15px; border-bottom: 1px solid #eee; }
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .tool-inputs { flex-direction: column; }
+    .checklist-items { grid-template-columns: 1fr; }
+    .floor-row { flex-direction: column; }
+    .floor-label { margin-bottom: 10px; }
+}
