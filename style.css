@@ -178,3 +178,64 @@ input {
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* ADMIN NAVIGATION */
+.admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #2d3436;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.logo span {
+    color: #00b894; /* Bangalore Green */
+    font-weight: bold;
+}
+
+/* REVENUE TRACKER LAYOUT */
+.revenue-summary {
+    display: flex;
+    gap: 20px;
+    padding: 0 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* Helps on mobile devices */
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    flex: 1;
+    min-width: 250px;
+    border-top: 4px solid #00b894;
+}
+
+.stat-card h4 {
+    margin: 0;
+    color: #636e72;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.stat-card .amount {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #2d3436;
+}
+
+.progress-bar {
+    background: #dfe6e9;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    background: #00b894;
+    height: 100%;
+}
