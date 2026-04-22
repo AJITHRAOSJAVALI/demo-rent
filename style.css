@@ -150,3 +150,31 @@ input {
     transform: scale(1.05);
     filter: brightness(0.9);
 }
+
+
+.recent-uploads { margin-top: 40px; background: white; padding: 20px; border-radius: 12px; }
+
+.history-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+
+.history-table th, .history-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.status-badge {
+    background: #e1f5fe;
+    color: #01579b;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.edit-btn {
+    background: none;
+    border: 1px solid #00b894;
+    color: #00b894;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}

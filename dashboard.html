@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script src="script.js"></script>
     <main class="dashboard">
     <header class="search-header">
         <input type="text" id="searchBar" placeholder="Search areas (e.g., HSR Layout, Indiranagar)...">
@@ -78,41 +80,7 @@
     </form>
 </section>
 
-<!-- to ADD property-->
 
-<section class="admin-panel">
-    <h2>Post New Property (Verification Mode)</h2>
-    <form id="postPropertyForm">
-        <div class="form-group">
-            <label>Property Name</label>
-            <input type="text" placeholder="e.g., Sunrise PG or Green View Apartment">
-        </div>
-        
-        <div class="form-group">
-            <label>Exact Location (Google Maps Link or Area)</label>
-            <input type="text" placeholder="Koramangala 4th Block, near Sony Signal">
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Rent (₹)</label>
-                <input type="number" placeholder="15000">
-            </div>
-            <div class="form-group">
-                <label>Security Deposit (₹)</label>
-                <input type="number" placeholder="50000">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Upload Verified Images</label>
-            <input type="file" multiple accept="image/*" class="file-input">
-            <p class="hint">Upload the photos you clicked during the visit.</p>
-        </div>
-
-        <button type="submit" class="submit-btn">Publish Verified Listing</button>
-    </form>
-</section>
 
 <!-- inventory or rooms management-->
 
@@ -139,6 +107,28 @@
             </div>
         </div>
     </div>
+</section>
+
+<section class="recent-uploads">
+    <h3>Your Rectified Properties (Tonight)</h3>
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="historyBody">
+            <tr>
+                <td>Green View Flat</td>
+                <td>HSR Layout</td>
+                <td><span class="status-badge">Verified</span></td>
+                <td><button class="edit-btn">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 </body>
