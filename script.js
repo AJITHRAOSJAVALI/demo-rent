@@ -15,7 +15,8 @@ if (loginForm) {
 }
 
 // --- 2. DYNAMIC INVENTORY LOGIC ---
-let currentBuildingData = [];
+// This line now checks if there is already a building saved in the browser
+let currentBuildingData = JSON.parse(localStorage.getItem('nammaRentBuilding')) || [];
 
 function addNewFloor() {
     const floor = document.getElementById('floorName').value;
@@ -23,9 +24,12 @@ function addNewFloor() {
 
     if (floor && count) {
         currentBuildingData.push({ floor: floor, roomCount: parseInt(count) });
+        
+        // SAVE: This line pushes the data into the browser's permanent memory
+        localStorage.setItem('nammaRentBuilding', JSON.stringify(currentBuildingData));
+        
         renderLayout();
         
-        // Clear inputs
         document.getElementById('floorName').value = "";
         document.getElementById('roomCount').value = "";
     } else {
@@ -58,11 +62,23 @@ function renderLayout() {
 
 // --- 3. TOGGLE ROOM STATUS ---
 function toggleStatus(element) {
-    if (element.classList.contains('available')) {
-        element.classList.remove('available');
-        element.classList.add('occupied');
-    } else {
-        element.classList.remove('occupied');
-        element.classList.add('available');
+    element.classList.toggle('available');
+    element.classList.toggle('occupied');
+}
+
+// --- 4. THE "MEMORY" BOOT-UP ---
+// When the dashboard opens, automatically show the saved floors
+window.onload = function() {
+    if (document.getElementById('dynamicInventory')) {
+        renderLayout();
+    }
+};
+
+// EXTRA: Clear data button (useful for testing)
+function resetBuilding() {
+    if(confirm("Are you sure you want to delete the whole building layout?")) {
+        localStorage.removeItem('nammaRentBuilding');
+        currentBuildingData = [];
+        renderLayout();
     }
 }
