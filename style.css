@@ -43,3 +43,76 @@ input {
 }
 
 .login-btn:hover { background-color: #00a885; }
+
+/* Dashboard Layout */
+.dashboard { padding: 20px; max-width: 1200px; margin: 0 auto; }
+
+.search-header { margin-bottom: 30px; text-align: center; }
+
+#searchBar {
+    width: 60%;
+    padding: 15px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Grid System */
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Card Styling */
+.property-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.property-card:hover { transform: translateY(-5px); }
+
+.image-placeholder {
+    height: 180px;
+    background: #dfe6e9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #636e72;
+}
+
+.card-content { padding: 20px; }
+
+.tag {
+    background: #e1f5fe;
+    color: #039be5;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.price-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.rent { font-size: 1.2rem; font-weight: bold; color: #2d3436; }
+.deposit { color: #b2bec3; font-size: 0.9rem; }
+
+.view-btn {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #00b894;
+    background: transparent;
+    color: #00b894;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
