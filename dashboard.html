@@ -1,125 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namma Rent | Admin Dashboard</title>
+    <title>Namma Rent | Admin</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <nav class="admin-nav">
-        <div class="logo">Namma Rent <span>Admin</span></div>
-        <div class="user-profile">Welcome, Rectifier</div>
+        <div class="logo">Namma Rent <span>Rectifier</span></div>
+        <a href="listings.html" style="color:white">View Site</a>
     </nav>
 
-    <div class="dashboard-container">
-        
-        <div class="revenue-summary">
-            <div class="stat-card">
-                <h4>Monthly Revenue</h4>
-                <p class="amount">₹1,45,000</p>
-                <span class="trend positive">↑ 12% vs last month</span>
-            </div>
-            <div class="stat-card">
-                <h4>Occupancy Rate</h4>
-                <p class="amount">85%</p>
-                <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
-            </div>
-            <div class="stat-card">
-                <h4>Total Verified</h4>
-                <p class="amount">24</p>
-                <span class="trend">Properties Live</span>
-            </div>
-        </div>
-
-        <hr>
-
-        <section class="admin-panel">
-            <h2>Post New Verified Property</h2>
-            <form id="postPropertyForm">
-                <div class="form-group">
-                    <label>Property Name</label>
-                    <input type="text" id="propName" placeholder="e.g., Sunrise PG or Green View Flat" required>
-                </div>
+    <div class="container">
+        <div class="card">
+            <h2>Verify New Property</h2>
+            <form id="propForm">
+                <div class="form-group"><label>Name</label><input type="text" id="pName" required></div>
+                <div class="form-group"><label>Location</label><input type="text" id="pLoc" required></div>
+                <div class="form-group"><label>Rent (Monthly)</label><input type="number" id="pRent" required></div>
                 
+               <div class="form-group">
+    <label>Property Type & Details</label>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <select id="pType" style="padding:10px; border-radius:6px; border:1px solid #ddd;">
+            <option value="1BHK">1BHK</option>
+            <option value="2BHK">2BHK</option>
+            <option value="PG">Paying Guest (PG)</option>
+            <option value="Studio">Studio/1RK</option>
+        </select>
+        <input type="number" id="pBeds" placeholder="Beds per room (if PG)">
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Facilities (Comma separated)</label>
+    <input type="text" id="pFeatures" placeholder="WiFi, Hot Water, Food, Washing Machine...">
+</div>
                 <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="propLoc" placeholder="e.g., HSR Layout, Sector 7" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Rent (₹)</label>
-                        <input type="number" id="propRent" placeholder="15000">
-                    </div>
-                    <div class="form-group">
-                        <label>Deposit (₹)</label>
-                        <input type="number" id="propDepo" placeholder="50000">
+                    <label>Image URLs (Main, Room, Kitchen, Bath)</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                        <input type="text" id="imgM" placeholder="Main URL">
+                        <input type="text" id="imgR" placeholder="Room URL">
+                        <input type="text" id="imgK" placeholder="Kitchen URL">
+                        <input type="text" id="imgB" placeholder="Bath URL">
                     </div>
                 </div>
 
-                <div class="verification-checklist">
-                    <h3>✅ Rectification Checklist</h3>
-                    <div class="checklist-items">
-                        <label class="check-container">
-                            <input type="checkbox"> Power Backup Tested
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="check-container">
-                            <input type="checkbox"> Water Supply Checked
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="check-container">
-                            <input type="checkbox"> Security/CCTV Verified
-                            <span class="checkmark"></span>
-                        </label>
+                <div style="background:#f1f2f6; padding:15px; border-radius:8px; margin:15px 0;">
+                    <h4>Layout Generator</h4>
+                    <div style="display:flex; gap:5px;">
+                        <input type="text" id="fName" placeholder="Floor">
+                        <input type="number" id="rCount" placeholder="Rooms">
+                        <button type="button" onclick="addFloor()" style="width:100px">Add</button>
                     </div>
+                    <div id="adminLayout"></div>
                 </div>
 
-                <button type="submit" class="submit-btn">Publish Verified Listing</button>
+                <button type="submit" class="btn">Publish Property</button>
             </form>
-        </section>
-
-        <hr>
-
-        <section class="inventory-section">
-            <h2>Room Inventory Management</h2>
-            
-            <div class="setup-tool">
-                <h4><i class="icon">🛠️</i> Building Setup Tool</h4>
-                <p class="hint">Use this to build the floor structure for the owner.</p>
-                <div class="tool-inputs">
-                    <input type="text" id="floorName" placeholder="Floor (e.g. 1)">
-                    <input type="number" id="roomCount" placeholder="No. of Rooms">
-                    <button type="button" onclick="addNewFloor()" class="add-btn">+ Add Floor</button>
-                </div>
-            </div>
-
-            <div id="dynamicInventory">
-                </div>
-        </section>
-
-        <hr>
-
-        <section class="recent-uploads">
-            <h3>Your Recent Rectifications</h3>
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="historyBody">
-                    </tbody>
-            </table>
-        </section>
-
-        <button type="button" onclick="resetBuilding()" style="background: #ff7675; margin-left: 10px;" class="add-btn">Reset All</button>
-
-    </div> <script src="script.js"></script>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

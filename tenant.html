@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Namma Rent | Tenant Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="admin-nav"><div class="logo">Namma Rent <span>Tenants</span></div></nav>
+
+    <div class="container">
+        <div class="card" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
+            <div style="flex:1">
+                <label>Location</label>
+                <input type="text" id="fLoc" onkeyup="applyTenantFilters()" placeholder="HSR, BTM...">
+            </div>
+            <div style="flex:1">
+                <label>Type</label>
+                <select id="fType" onchange="applyTenantFilters()" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ddd;">
+                    <option value="All">All Types</option>
+                    <option value="1BHK">1BHK</option>
+                    <option value="2BHK">2BHK</option>
+                    <option value="PG">PG</option>
+                </select>
+            </div>
+            <div style="flex:1">
+                <label>Max Budget</label>
+                <input type="number" id="fPrice" onkeyup="applyTenantFilters()" placeholder="Max Rent">
+            </div>
+        </div>
+
+        <div id="tenantGrid" class="listings-grid"></div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span onclick="document.getElementById('modal').style.display='none'" style="float:right; cursor:pointer; font-size:28px;">&times;</span>
+            <h2 id="mTitle"></h2>
+            <div id="mFeats" class="amenity-container"></div>
+            
+            <h4>Room, Kitchen & Bathroom Photos</h4>
+            <div id="mImgs" style="display:flex; gap:12px; margin-bottom:20px; overflow-x:auto; padding:10px 0;"></div>
+            
+            <hr>
+            <h4>Availability Map</h4>
+            <div id="mLayout"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
