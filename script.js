@@ -1,68 +1,68 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.querySelector('.login-form');
-
+// --- 1. LOGIN LOGIC ---
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevents page from reloading
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('password').value;
 
-        // Get the values the user typed in
-        const emailOrPhone = document.querySelector('input[type="text"]').value;
-        const password = document.querySelector('input[type="password"]').value;
-
-        // Simple validation for now
-        if (emailOrPhone === "admin" && password === "1234") {
-            alert("Login Successful! Welcome to Namma Rent.");
-            // Later we will redirect to the home page here:
-            // window.location.href = "dashboard.html";
+        if (email === "admin" && pass === "1234") {
+            window.location.href = "dashboard.html";
         } else {
-            alert("Invalid credentials. Try 'admin' and '1234' for testing.");
+            alert("Invalid credentials. Try admin / 1234");
         }
     });
-});
+}
 
-function toggleRoom(element) {
-    if (element.classList.contains('available')) {
-        element.classList.remove('available');
-        element.classList.add('occupied');
-        // You would eventually send an update to your database here
-        console.log("Room " + element.innerText + " marked as Occupied");
+// --- 2. DYNAMIC INVENTORY LOGIC ---
+let currentBuildingData = [];
+
+function addNewFloor() {
+    const floor = document.getElementById('floorName').value;
+    const count = document.getElementById('roomCount').value;
+
+    if (floor && count) {
+        currentBuildingData.push({ floor: floor, roomCount: parseInt(count) });
+        renderLayout();
+        
+        // Clear inputs
+        document.getElementById('floorName').value = "";
+        document.getElementById('roomCount').value = "";
     } else {
-        element.classList.remove('occupied');
-        element.classList.add('available');
-        console.log("Room " + element.innerText + " marked as Available");
+        alert("Enter floor name and room count!");
     }
 }
 
-// This runs only on the Dashboard page
-if (window.location.pathname.includes('dashboard.html')) {
-    const postForm = document.getElementById('postPropertyForm');
+function renderLayout() {
+    const displayArea = document.getElementById('dynamicInventory');
+    if (!displayArea) return;
 
-    postForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    displayArea.innerHTML = ""; 
 
-        // 1. Capture the text details
-        const propertyData = {
-            name: document.querySelector('input[placeholder*="Sunrise PG"]').value,
-            location: document.querySelector('input[placeholder*="Koramangala"]').value,
-            rent: document.querySelector('input[placeholder="15000"]').value,
-            deposit: document.querySelector('input[placeholder="50000"]').value,
-            verified: true,
-            timestamp: new Date().toLocaleString()
-        };
+    currentBuildingData.forEach(level => {
+        let row = document.createElement('div');
+        row.className = 'floor-row';
+        row.innerHTML = `<div class="floor-label">Floor ${level.floor}</div>`;
 
-        // 2. Capture the checklist status
-        const checks = document.querySelectorAll('.checklist-items input[type="checkbox"]');
-        const verificationResults = {};
-        checks.forEach((check, index) => {
-            verificationResults[`step_${index}`] = check.checked;
-        });
+        let grid = document.createElement('div');
+        grid.className = 'room-grid';
 
-        console.log("Saving Property:", propertyData);
-        console.log("Verification Checklist:", verificationResults);
+        for (let i = 1; i <= level.roomCount; i++) {
+            grid.innerHTML += `<div class="room available" onclick="toggleStatus(this)">${level.floor}0${i}</div>`;
+        }
 
-        // 3. Show a success notification
-        alert(`Success! Property in ${propertyData.location} has been rectified and uploaded.`);
-        
-        // Reset form for the next property visit
-        postForm.reset();
-});
+        row.appendChild(grid);
+        displayArea.appendChild(row);
+    });
+}
+
+// --- 3. TOGGLE ROOM STATUS ---
+function toggleStatus(element) {
+    if (element.classList.contains('available')) {
+        element.classList.remove('available');
+        element.classList.add('occupied');
+    } else {
+        element.classList.remove('occupied');
+        element.classList.add('available');
+    }
 }
