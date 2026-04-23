@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Namma Rent | Owner Hub</title><link rel="stylesheet" href="style.css"></head>
+<body>
+    <nav class="admin-nav"><div class="logo">Namma Rent <span>Owner Hub</span></div></nav>
+    <div class="container">
+        <div class="card" style="background:var(--dark); color:white; display:flex; justify-content:space-between; align-items:center;">
+            <div><h2 id="ownerPgName" style="margin:0;">--</h2><p id="ownerLoc" style="margin:0; opacity:0.7;">--</p></div>
+            <div style="text-align:right;"><h2 style="color:var(--primary); margin:0;">₹ <span id="totalRent">0</span></h2><p style="margin:0; font-size:0.8rem;">Rent Collected</p></div>
+        </div>
+
+        <div class="card">
+            <h3>Manage Rooms</h3>
+            <div id="ownerGrid"></div>
+        </div>
+
+        <div id="roomControlPanel" class="card" style="display:none; border-top: 5px solid var(--primary);">
+            <h3>Control Room: <span id="activeRoomId">--</span></h3>
+            <div style="background:#f1f2f6; padding:10px; border-radius:8px; margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                <label style="margin:0;">Total Beds:</label><input type="number" id="roomCapInput" style="width:70px;">
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <button class="btn" onclick="updateState('occupy')" style="background:#2d3436">➕ Add Tenant</button>
+                <button class="btn" onclick="updateState('vacate')" style="background:#636e72">➖ Vacate</button>
+                <button class="btn" onclick="updateState('pay')" style="background:var(--paid)">💰 Mark PAID</button>
+                <button class="btn" onclick="updateState('pending')" style="background:#fab1a0">⏳ Pending</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,158 +1,81 @@
-// Database Keys
-let properties = JSON.parse(localStorage.getItem('nr_props')) || [];
-let tempLayout = [];
-
-// 1. Building Generator
-function addFloor() {
-    const f = document.getElementById('fName').value;
-    const r = document.getElementById('rCount').value;
-    if(f && r) {
-        tempLayout.push({ floor: f, count: parseInt(r) });
-        render('adminLayout', tempLayout);
-        document.getElementById('fName').value = "";
-        document.getElementById('rCount').value = "";
-    }
-}
-
-function render(id, layout) {
-    const area = document.getElementById(id);
-    if(!area) return;
-    area.innerHTML = layout.map(L => `
-        <div class="floor-row">
-            <div class="floor-label">Floor ${L.floor}</div>
-            <div class="room-grid">
-                ${Array.from({length: L.count}, (_, i) => `
-                    <div class="room" onclick="this.classList.toggle('occupied')">${L.floor}0${i+1}</div>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
-}
-
-// 2. Save Property
-const form = document.getElementById('propForm');
-if(form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const p = {
-    id: Date.now(),
-    name: document.getElementById('pName').value,
-    loc: document.getElementById('pLoc').value,
-    rent: parseInt(document.getElementById('pRent').value),
-    type: document.getElementById('pType').value,
-    beds: document.getElementById('pBeds').value || "N/A",
-    feats: document.getElementById('pFeatures').value.split(','),
-    imgs: [
-        document.getElementById('imgM').value,
-        document.getElementById('imgR').value,
-        document.getElementById('imgK').value,
-        document.getElementById('imgB').value
-    ],
-    layout: [...tempLayout]
+// 1. YOUR CLOUD CONNECTION (From your Firebase Photo)
+const firebaseConfig = {
+  apiKey: "AIzaSyB1UJr_8cWGkzE1C3MBIz5bl6c44szXGes",
+  authDomain: "namma-rent-1eb78.firebaseapp.com",
+  projectId: "namma-rent-1eb78",
+  storageBucket: "namma-rent-1eb78.firebasestorage.app",
+  messagingSenderId: "1014188363352",
+  appId: "1:1014188363352:web:9683348e6f24dcbc79042c"
 };
-        properties.push(p);
-        localStorage.setItem('nr_props', JSON.stringify(properties));
-        alert("Published!");
-        window.location.href = "listings.html";
+
+// Initialize the "Brain"
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ---------------------------------------------------------
+// 2. DASHBOARD: SAVE NEW PROPERTY TO CLOUD
+// ---------------------------------------------------------
+const propForm = document.getElementById('propForm');
+
+if (propForm) {
+    propForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const newProperty = {
+            name: document.getElementById('pName').value,
+            location: document.getElementById('pLoc').value,
+            rent: document.getElementById('pRent').value,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp() // Real-time clock
+        };
+
+        // This sends the data to the Cloud instead of your laptop's memory
+        db.collection("properties").add(newProperty)
+            .then(() => {
+                alert("Success! Property is now LIVE in the Cloud.");
+                propForm.reset();
+                window.location.href = "tenant.html"; // Go see it live!
+            })
+            .catch((error) => {
+                console.error("Error saving to cloud: ", error);
+                alert("Error: Check if you set 'Rules' to true in Firebase.");
+            });
     });
 }
 
-function loadListings() {
-    const grid = document.getElementById('listingsGrid');
-    if(!grid) return;
-    grid.innerHTML = properties.map(p => `
-        <div class="prop-card" id="card-${p.id}">
-            <img src="${p.imgs[0]}" class="prop-img">
-            <div class="prop-info">
-                <h3>${p.name}</h3>
-                <p>📍 ${p.loc} | ₹${p.rent}</p>
-                <button class="btn" onclick="openModal(${p.id})">Check Details</button>
-                <button onclick="deleteProperty(${p.id})" style="background:#ff7675; margin-top:5px;" class="btn">Delete Property</button>
-            </div>
-        </div>
-    `).join('');
+// ---------------------------------------------------------
+// 3. TENANT PAGE: REAL-TIME UPDATES (No Refresh Needed)
+// ---------------------------------------------------------
+const tenantGrid = document.getElementById('tenantGrid');
+
+if (tenantGrid) {
+    // This "listens" to the cloud. If you add a property on the dashboard, 
+    // it pops up here instantly on any device!
+    db.collection("properties").orderBy("createdAt", "desc")
+        .onSnapshot((snapshot) => {
+            tenantGrid.innerHTML = ""; // Clear old cards
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                
+                // Create the Card HTML
+                const card = `
+                    <div class="prop-card">
+                        <div class="prop-info">
+                            <h3>${data.name}</h3>
+                            <p>📍 ${data.location}</p>
+                            <p class="rent-tag">₹${data.rent}/month</p>
+                        </div>
+                        <button class="view-btn" onclick="goToRooms('${doc.id}')">
+                            View Availability
+                        </button>
+                    </div>
+                `;
+                tenantGrid.innerHTML += card;
+            });
+        });
 }
 
-function deleteProperty(id) {
-    if(confirm("Are you sure you want to delete this property?")) {
-        properties = properties.filter(p => p.id !== id);
-        localStorage.setItem('nr_props', JSON.stringify(properties));
-        location.reload();
-    }
+// Helper function to navigate
+function goToRooms(propertyId) {
+    window.location.href = `owner.html?id=${propertyId}`;
 }
-
-function openModal(id) {
-    const p = properties.find(x => x.id === id);
-    const m = document.getElementById('modal');
-    m.style.display = 'block';
-    document.getElementById('mTitle').innerText = p.name;
-    
-    document.getElementById('mFeats').innerHTML = p.feats.map(f => `<span class="amenity-tag">✅ ${f.trim()}</span>`).join('');
-    document.getElementById('mImgs').innerHTML = p.imgs.slice(1).map(src => src ? `<img src="${src}" class="modal-img">` : '').join('');
-    
-    // Added Inquiry Button
-    let inquiryBtn = `<a href="https://wa.me/91XXXXXXXXXX?text=I'm interested in ${p.name}" target="_blank" class="btn" style="text-decoration:none; display:block; text-align:center; background:#25D366; margin-bottom:15px;">Inquire via WhatsApp</a>`;
-    
-    const layoutArea = document.getElementById('mLayout');
-    render('mLayout', p.layout);
-    layoutArea.insertAdjacentHTML('afterbegin', inquiryBtn);
-}
-
-window.onclick = (e) => { if(e.target.className === 'modal') e.target.style.display = 'none'; }
-
-if(document.getElementById('listingsGrid')) loadListings();
-
-function searchProperties() {
-    let input = document.getElementById('searchInput').value.toLowerCase();
-    let cards = document.getElementsByClassName('prop-card');
-
-    for (let i = 0; i < cards.length; i++) {
-        let title = cards[i].querySelector('h3').innerText.toLowerCase();
-        let loc = cards[i].querySelector('p').innerText.toLowerCase();
-        if (title.includes(input) || loc.includes(input)) {
-            cards[i].style.display = "";
-        } else {
-            cards[i].style.display = "none";
-        }
-    }
-}
-
-function applyTenantFilters() {
-    const locFilter = document.getElementById('fLoc').value.toLowerCase();
-    const typeFilter = document.getElementById('fType').value;
-    const priceFilter = document.getElementById('fPrice').value;
-
-    const filtered = properties.filter(p => {
-        const matchLoc = p.loc.toLowerCase().includes(locFilter);
-        const matchType = typeFilter === "All" || p.type === typeFilter;
-        const matchPrice = !priceFilter || p.rent <= parseInt(priceFilter);
-        return matchLoc && matchType && matchPrice;
-    });
-
-    renderTenantListings(filtered);
-}
-
-function renderTenantListings(data) {
-    const grid = document.getElementById('tenantGrid');
-    if(!grid) return;
-    grid.innerHTML = data.map(p => `
-        <div class="prop-card">
-            <div style="position:relative">
-                <img src="${p.imgs[0]}" class="prop-img">
-                <span style="position:absolute; top:10px; right:10px; background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${p.type}</span>
-            </div>
-            <div class="prop-info">
-                <h3>${p.name}</h3>
-                <p>📍 ${p.loc}</p>
-                <p style="font-weight:bold; color:var(--primary)">₹${p.rent}/month</p>
-                <div style="font-size:0.8rem; color:#666; margin-bottom:10px;">
-                    ${p.type === 'PG' ? `🛏️ ${p.beds} Beds/Room` : '🏠 Full Unit'}
-                </div>
-                <button class="btn" onclick="openModal(${p.id})">View Details & Photos</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Call this on page load for tenant.html
-if(document.getElementById('tenantGrid')) renderTenantListings(properties);

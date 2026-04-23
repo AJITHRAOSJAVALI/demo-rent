@@ -1,61 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Namma Rent | Admin</title>
-    <link rel="stylesheet" href="style.css">
+<head><title>Namma Rent | Admin</title><link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
-    <nav class="admin-nav">
-        <div class="logo">Namma Rent <span>Rectifier</span></div>
-        <a href="listings.html" style="color:white">View Site</a>
-    </nav>
-
+    <nav class="admin-nav"><div class="logo">Namma Rent <span>Rectifier</span></div></nav>
     <div class="container">
         <div class="card">
-            <h2>Verify New Property</h2>
+            <h2>Add New Verified Property</h2>
             <form id="propForm">
-                <div class="form-group"><label>Name</label><input type="text" id="pName" required></div>
-                <div class="form-group"><label>Location</label><input type="text" id="pLoc" required></div>
-                <div class="form-group"><label>Rent (Monthly)</label><input type="number" id="pRent" required></div>
+                <div class="form-group"><label>Property Name</label><input type="text" id="pName" required></div>
+                <div class="form-group"><label>Area / Location</label><input type="text" id="pLoc" required></div>
+                <div class="form-group"><label>Google Maps Link</label><input type="text" id="pMap" placeholder="Paste link here" required></div>
                 
-               <div class="form-group">
-    <label>Property Type & Details</label>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-        <select id="pType" style="padding:10px; border-radius:6px; border:1px solid #ddd;">
-            <option value="1BHK">1BHK</option>
-            <option value="2BHK">2BHK</option>
-            <option value="PG">Paying Guest (PG)</option>
-            <option value="Studio">Studio/1RK</option>
-        </select>
-        <input type="number" id="pBeds" placeholder="Beds per room (if PG)">
-    </div>
-</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                    <div class="form-group"><label>Rent</label><input type="number" id="pRent" required></div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="pType"><option value="PG">PG</option><option value="1BHK">1BHK</option><option value="2BHK">2BHK</option></select>
+                    </div>
+                    <div class="form-group"><label>Beds/Room</label><input type="number" id="pBeds" value="4"></div>
+                </div>
 
-<div class="form-group">
-    <label>Facilities (Comma separated)</label>
-    <input type="text" id="pFeatures" placeholder="WiFi, Hot Water, Food, Washing Machine...">
-</div>
+                <div class="form-group"><label>Amenities (Comma separated)</label><input type="text" id="pFeatures" placeholder="WiFi, Food, Washing Machine..."></div>
+
                 <div class="form-group">
                     <label>Image URLs (Main, Room, Kitchen, Bath)</label>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                        <input type="text" id="imgM" placeholder="Main URL">
-                        <input type="text" id="imgR" placeholder="Room URL">
-                        <input type="text" id="imgK" placeholder="Kitchen URL">
-                        <input type="text" id="imgB" placeholder="Bath URL">
+                        <input type="text" id="imgM" placeholder="Main URL" required><input type="text" id="imgR" placeholder="Room URL">
+                        <input type="text" id="imgK" placeholder="Kitchen URL"><input type="text" id="imgB" placeholder="Bath URL">
                     </div>
                 </div>
 
-                <div style="background:#f1f2f6; padding:15px; border-radius:8px; margin:15px 0;">
+                <div style="background:#f1f2f6; padding:15px; border-radius:8px; margin-bottom:15px;">
                     <h4>Layout Generator</h4>
-                    <div style="display:flex; gap:5px;">
-                        <input type="text" id="fName" placeholder="Floor">
-                        <input type="number" id="rCount" placeholder="Rooms">
-                        <button type="button" onclick="addFloor()" style="width:100px">Add</button>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="fName" placeholder="Floor No"><input type="number" id="rCount" placeholder="Rooms">
+                        <button type="button" class="btn" onclick="addFloor()" style="width:80px; margin:0;">Add</button>
                     </div>
                     <div id="adminLayout"></div>
                 </div>
-
-                <button type="submit" class="btn">Publish Property</button>
+                <button type="submit" class="btn">Publish to Market</button>
             </form>
         </div>
     </div>
