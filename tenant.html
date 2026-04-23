@@ -2,87 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namma Rent - Find Your PG</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* This is the design for the cards the JS will print */
-        .form-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-left: 5px solid #007bff;
-        }
-
-        h2 { color: #333; margin-top: 0; }
-        p { color: #555; margin: 5px 0; font-size: 1.1rem; }
-        
-        .whatsapp-btn {
-            display: block;
-            text-align: center;
-            background-color: #25D366;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
-
-        .whatsapp-btn:hover {
-            background-color: #1ebe57;
-            transform: scale(1.02);
-        }
-
-        .no-data {
-            text-align: center;
-            color: #888;
-            margin-top: 50px;
-        }
-    </style>
+    <title>Namma Rent | Marketplace</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="marketplace.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <h1>Namma Rent - Available PGs</h1>
-    </nav>
+    <header class="top-nav">
+        <h2>Bengaluru PGs & Houses</h2>
+        <select id="areaDropdown">
+            <option value="">All Bengaluru</option>
+        </select>
+    </header>
 
-    <div class="container" id="propertyList">
-        <p class="no-data">Searching the cloud for PGs...</p>
+    <div class="market-container">
+        <div id="marketList"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <script src="firebase-config.js"></script>
+    <script src="area-service.js"></script>
+    <script src="property-service.js"></script>
+
+    <script>
+        // Start the modules
+        AreaManager.syncDropdown();
+        PropertyApp.loadMarket('marketList');
+    </script>
 </body>
 </html>

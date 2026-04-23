@@ -2,148 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namma Rent - Admin Dashboard</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-    <style>
-        /* This brings the color back immediately! */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .navbar {
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 500px;
-            margin-top: 30px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        h2 { color: #333; margin-top: 0; }
-
-        .input-group { margin-bottom: 15px; }
-
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
-
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box; /* Critical for layout */
-        }
-
-        /* Improved Image Upload Box */
-        .drop-zone {
-            width: 100%;
-            height: 150px;
-            border: 2px dashed #007bff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background: #f8f9fa;
-            position: relative;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .drop-zone:hover { background: #eef6ff; }
-
-        .preview-box {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            display: none;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .submit-btn:hover { background-color: #0056b3; }
-    </style>
+    <title>Namma Rent | Executive Dashboard</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="area-list.css"> <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <h1>Namma Rent Dashboard</h1>
-    </nav>
+    <div class="dash-container">
+        <header class="dash-header">
+            <h1>Executive Control</h1>
+            <p>Bengaluru Service Management</p>
+        </header>
 
-    <div class="container">
-        <div class="form-card">
+        <div class="dash-grid">
+            <section class="dash-card">
+                <div id="area-module-placeholder"></div>
+            </section>
 
-<div class="admin-list-section">
-    <h2>Existing Properties</h2>
-    
-            <h2>Add New Property</h2>
-            <form id="propForm">
-                <div class="input-group">
-                    <label>PG Name</label>
-                    <input type="text" id="pName" placeholder="Enter PG Name" required>
+            <section class="dash-card">
+                <h3>Verify New Listing</h3>
+                <div class="form-group">
+                    <label>Property Name</label>
+                    <input type="text" id="propName" placeholder="e.g., Green Garden PG">
                 </div>
-
-                <div class="input-group">
-                    <label>Location</label>
-                    <input type="text" id="pLoc" placeholder="e.g. BTM Layout" required>
+                <div class="form-group">
+                    <label>Assigned Area</label>
+                    <select id="areaDropdown"></select>
                 </div>
-
-                <div class="input-group">
-                    <label>Rent (₹)</label>
-                    <input type="number" id="pRent" placeholder="e.g. 9000" required>
-                </div>
-
-                <div class="input-group">
-    <label>Owner Phone Number (WhatsApp)</label>
-    <input type="number" id="ownerPhone" placeholder="Enter 10-digit number" required>
-</div>
-
-                <label>Property Photo</label>
-                <label for="pImg" class="drop-zone" id="dropZone">
-                    <span class="drop-zone-text">📸 Click to upload photo</span>
-                    <input type="file" id="pImg" accept="image/*" hidden>
-                    <div id="imagePreview" class="preview-box"></div>
-                </label>
-
-                <button type="submit" class="submit-btn">Add to Cloud</button>
-            </form>
+                <button class="btn-primary" onclick="AdminManager.verifyAndPublish()">
+                    Publish to Market
+                </button>
+            </section>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="area-service.js"></script>
+    <script src="admin-service.js"></script>
+
+    <script>
+        // Use DOT connection to setup the page
+        AreaManager.loadInterface('area-module-placeholder');
+        AdminManager.init();
+    </script>
 </body>
 </html>
