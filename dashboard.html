@@ -1,50 +1,149 @@
 <!DOCTYPE html>
-<html>
-<head><title>Namma Rent | Admin</title><link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namma Rent - Admin Dashboard</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <style>
+        /* This brings the color back immediately! */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin-top: 30px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 { color: #333; margin-top: 0; }
+
+        .input-group { margin-bottom: 15px; }
+
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box; /* Critical for layout */
+        }
+
+        /* Improved Image Upload Box */
+        .drop-zone {
+            width: 100%;
+            height: 150px;
+            border: 2px dashed #007bff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .drop-zone:hover { background: #eef6ff; }
+
+        .preview-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover { background-color: #0056b3; }
+    </style>
 </head>
 <body>
-    <nav class="admin-nav"><div class="logo">Namma Rent <span>Rectifier</span></div></nav>
+
+    <nav class="navbar">
+        <h1>Namma Rent Dashboard</h1>
+    </nav>
+
     <div class="container">
-        <div class="card">
-            <h2>Add New Verified Property</h2>
+        <div class="form-card">
+
+<div class="admin-list-section">
+    <h2>Existing Properties</h2>
+    
+            <h2>Add New Property</h2>
             <form id="propForm">
-                <div class="form-group"><label>Property Name</label><input type="text" id="pName" required></div>
-                <div class="form-group"><label>Area / Location</label><input type="text" id="pLoc" required></div>
-                <div class="form-group"><label>Google Maps Link</label><input type="text" id="pMap" placeholder="Paste link here" required></div>
-                
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                    <div class="form-group"><label>Rent</label><input type="number" id="pRent" required></div>
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select id="pType"><option value="PG">PG</option><option value="1BHK">1BHK</option><option value="2BHK">2BHK</option></select>
-                    </div>
-                    <div class="form-group"><label>Beds/Room</label><input type="number" id="pBeds" value="4"></div>
+                <div class="input-group">
+                    <label>PG Name</label>
+                    <input type="text" id="pName" placeholder="Enter PG Name" required>
                 </div>
 
-                <div class="form-group"><label>Amenities (Comma separated)</label><input type="text" id="pFeatures" placeholder="WiFi, Food, Washing Machine..."></div>
-
-                <div class="form-group">
-                    <label>Image URLs (Main, Room, Kitchen, Bath)</label>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                        <input type="text" id="imgM" placeholder="Main URL" required><input type="text" id="imgR" placeholder="Room URL">
-                        <input type="text" id="imgK" placeholder="Kitchen URL"><input type="text" id="imgB" placeholder="Bath URL">
-                    </div>
+                <div class="input-group">
+                    <label>Location</label>
+                    <input type="text" id="pLoc" placeholder="e.g. BTM Layout" required>
                 </div>
 
-                <div style="background:#f1f2f6; padding:15px; border-radius:8px; margin-bottom:15px;">
-                    <h4>Layout Generator</h4>
-                    <div style="display:flex; gap:10px;">
-                        <input type="text" id="fName" placeholder="Floor No"><input type="number" id="rCount" placeholder="Rooms">
-                        <button type="button" class="btn" onclick="addFloor()" style="width:80px; margin:0;">Add</button>
-                    </div>
-                    <div id="adminLayout"></div>
+                <div class="input-group">
+                    <label>Rent (₹)</label>
+                    <input type="number" id="pRent" placeholder="e.g. 9000" required>
                 </div>
-                <button type="submit" class="btn">Publish to Market</button>
+
+                <div class="input-group">
+    <label>Owner Phone Number (WhatsApp)</label>
+    <input type="number" id="ownerPhone" placeholder="Enter 10-digit number" required>
+</div>
+
+                <label>Property Photo</label>
+                <label for="pImg" class="drop-zone" id="dropZone">
+                    <span class="drop-zone-text">📸 Click to upload photo</span>
+                    <input type="file" id="pImg" accept="image/*" hidden>
+                    <div id="imagePreview" class="preview-box"></div>
+                </label>
+
+                <button type="submit" class="submit-btn">Add to Cloud</button>
             </form>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

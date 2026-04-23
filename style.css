@@ -66,3 +66,72 @@ input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radiu
 .paid { background-color: #e3f2fd; border-color: #2196f3; box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); }
 
 .bed-count { font-size: 10px; font-weight: bold; }
+
+/* Dashboard Specific Styles */
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 40px auto;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* The Upload Box */
+.drop-zone {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #007bff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
